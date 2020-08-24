@@ -123,8 +123,7 @@ Widget restaurantPage(BuildContext context, Restaurant restaurant) {
   }, []);
 
   return Scaffold(
-      body: SafeArea(
-          child: Container(
+      body: Container(
     padding: EdgeInsets.symmetric(vertical: 16),
     child: Column(children: [
       Padding(
@@ -156,5 +155,5 @@ Widget restaurantPage(BuildContext context, Restaurant restaurant) {
             }),
       )
     ]),
-  )));
+  ));
 }

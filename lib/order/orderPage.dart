@@ -1,6 +1,7 @@
 import 'package:delivery_customer/util/appTextStyle.dart';
 import 'package:delivery_customer/order/map.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:openapi/model/order.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -23,6 +24,8 @@ String _getOrderStatusTitle(Order order) {
       return "In delivery";
     case OrderStatus.delivered:
       return "Successfully delivered";
+    case OrderStatus.canceled:
+      return "Order was canceled";
   }
 }
 
@@ -40,6 +43,8 @@ String _getOrderStatusDescription(Order order) {
       return "Your courier is heading to you with your order";
     case OrderStatus.delivered:
       return "Your order was successfully delivered";
+    case OrderStatus.canceled:
+      return "Your order was canceled"; // TODO: show reason here?
   }
 }
 
@@ -142,16 +147,29 @@ Widget orderPage(BuildContext context, Order order) {
 
   print(height);
 
-  return SafeArea(
-      child: Scaffold(
-          body: SlidingUpPanel(
+  return Scaffold(
+      body: SlidingUpPanel(
     minHeight: peekHeight,
     maxHeight: maxHeight,
     borderRadius: BorderRadius.circular(24),
-    body: Map(
-        pickup: order.restaurant.address.location,
-        dropoff: order.deliveryAddress.location,
-        padding: EdgeInsets.only(bottom: peekHeight + 24)),
+    body: Stack(children: [
+      Map(
+          pickup: order.restaurant.address.location,
+          dropoff: order.deliveryAddress.location,
+          padding: EdgeInsets.only(bottom: peekHeight + 24)),
+      Container(
+          margin: EdgeInsets.only(top: 24.0 + 8, left: 8),
+          child: FloatingActionButton(
+              elevation: 4,
+              hoverElevation: 6,
+              mini: true,
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              child: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }))
+    ]),
     panel: Card(
       elevation: 12.0,
       shape: RoundedRectangleBorder(
@@ -173,5 +191,5 @@ Widget orderPage(BuildContext context, Order order) {
         ],
       )),
     ),
-  )));
+  ));
 }

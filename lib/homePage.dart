@@ -3,6 +3,7 @@ import 'package:delivery_customer/order/ordersPage.dart';
 import 'package:delivery_customer/util/appTextStyle.dart';
 import 'package:delivery_customer/iocContainer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
@@ -123,53 +124,51 @@ Widget customerHomePage(BuildContext context) {
 
   return Scaffold(
     body: WillPopScope(
-        onWillPop: () async {
-          var result =
-              await pages[currentPageIndex.value].key.currentState.maybePop();
-          return !result;
-        },
-        child: SafeArea(
-          child: Stack(children: [
-            IndexedStack(index: currentPageIndex.value, children: [
-              Navigator(
-                key: foodPage.key,
-                onGenerateRoute: (settings) => MaterialPageRoute(
-                  settings: settings,
-                  builder: (context) => Container(
-                      padding: EdgeInsets.only(top: 8),
-                      child: Column(
-                        children: [
-                          AddressPicker(),
-                          Expanded(
-                              child: ListView.builder(
-                                  itemCount: restaurants.value.length,
-                                  itemBuilder: (context, index) {
-                                    return RestaurantItem(
-                                        restaurants.value[index]);
-                                  }))
-                        ],
-                      )),
-                ),
-              ),
-              Navigator(
-                  key: ordersPage.key,
-                  onGenerateRoute: (settings) => MaterialPageRoute(
-                      settings: settings, builder: (context) => OrdersPage()))
-            ]),
-            isBasketButtonVisible
-                ? Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      _BasketButton(basket.data),
-                      Container(
-                        height: 8,
-                      )
-                    ],
+      onWillPop: () async {
+        var result =
+            await pages[currentPageIndex.value].key.currentState.maybePop();
+        return !result;
+      },
+      child: Stack(children: [
+        IndexedStack(index: currentPageIndex.value, children: [
+          SafeArea(
+              child: Navigator(
+            key: foodPage.key,
+            onGenerateRoute: (settings) => MaterialPageRoute(
+              settings: settings,
+              builder: (context) => Container(
+                  child: Column(
+                children: [
+                  AddressPicker(),
+                  Expanded(
+                      child: ListView.builder(
+                          itemCount: restaurants.value.length,
+                          itemBuilder: (context, index) {
+                            return RestaurantItem(restaurants.value[index]);
+                          }))
+                ],
+              )),
+            ),
+          )),
+          Navigator(
+              key: ordersPage.key,
+              onGenerateRoute: (settings) => MaterialPageRoute(
+                  settings: settings, builder: (context) => OrdersPage()))
+        ]),
+        isBasketButtonVisible
+            ? Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  _BasketButton(basket.data),
+                  Container(
+                    height: 8,
                   )
-                : Container(),
-          ]),
-        )),
+                ],
+              )
+            : Container(),
+      ]),
+    ),
     bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
           if (currentPageIndex.value == index) {

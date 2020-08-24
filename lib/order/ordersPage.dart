@@ -1,4 +1,5 @@
 import 'package:delivery_customer/iocContainer.dart';
+import 'package:delivery_customer/order/orderPage.dart';
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -9,10 +10,20 @@ part 'ordersPage.g.dart';
 
 @swidget
 Widget _orderItem(BuildContext context, Order order) {
+  var onCardTap = () {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return OrderPage(order);
+    }));
+  };
   return Card(
-      child: Column(
-    children: [Text(order.createdAt.toString()), Text(order.status.name)],
-  ));
+      child: InkWell(
+          onTap: onCardTap,
+          child: Column(
+            children: [
+              Text(order.createdAt.toString()),
+              Text(order.status.name)
+            ],
+          )));
 }
 
 @hwidget

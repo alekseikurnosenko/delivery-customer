@@ -54,18 +54,23 @@ class _MapState extends State<Map> {
   void _onMapCreated(GoogleMapController controller) async {
     var ownLocation = await Geolocator().getLastKnownPosition();
 
-    LatLngBounds bounds = boundsFromLatLngList([
+    var list = [
       widget.pickup.toGoogleLatLng(),
       widget.dropoff.toGoogleLatLng(),
-      ownLocation?.toGoogleLatLng()
-    ]);
+    ];
+    if (ownLocation != null) {
+      list.add(ownLocation.toGoogleLatLng());
+    }
+    LatLngBounds bounds = boundsFromLatLngList(list);
 
     // NB: Required for initial map padding to set
     setState(() {});
 
     await waitForGoogleMap(controller);
+
+    await Future.delayed(Duration(milliseconds: 50));
     // await Future.delayed(Duration(milliseconds: 1000), () => {});
-    controller.moveCamera(CameraUpdate.newLatLngBounds(bounds, 64));
+    await controller.moveCamera(CameraUpdate.newLatLngBounds(bounds, 64));
 
     // NB: Required for padding to work!
     setState(() {});
