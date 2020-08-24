@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'dart:typed_data';
 
-import 'package:delivery_customer/mapIcon.dart';
+import 'package:delivery_customer/order/mapIcon.dart';
 import 'package:delivery_customer/util/markerGenerator.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';

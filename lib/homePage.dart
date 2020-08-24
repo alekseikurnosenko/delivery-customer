@@ -1,6 +1,6 @@
-import 'package:delivery_customer/appTextStyle.dart';
-import 'package:delivery_customer/ordersPage.dart';
-import 'package:delivery_customer/restaurantItem.dart';
+import 'package:delivery_customer/food/restaurantItem.dart';
+import 'package:delivery_customer/order/ordersPage.dart';
+import 'package:delivery_customer/util/appTextStyle.dart';
 import 'package:delivery_customer/iocContainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

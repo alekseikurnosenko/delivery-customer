@@ -1,12 +1,7 @@
+import 'package:delivery_customer/basket/basketPage.dart';
+import 'package:delivery_customer/checkout/checkoutPage.dart';
 import 'package:delivery_customer/homePage.dart';
-import 'package:delivery_customer/basketPage.dart';
-import 'package:delivery_customer/checkoutPage.dart';
-import 'package:delivery_customer/orderPage.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:openapi/model/order.dart';
-import 'package:openapi/model/order_item_dto.dart';
-import 'package:openapi/model/order_status.dart';
 
 void main() {
   runApp(MyApp());
@@ -54,22 +49,22 @@ class MyApp extends StatelessWidget {
       initialRoute: "/",
       routes: {
         "/": (context) {
-          var order = Order((b) => b
-            ..status = OrderStatus.awaitingPickup
-            ..courier.fullName = "Jake P"
-            ..items.add(OrderItemDTO((b) => b
-              ..dish.name = "Burger"
-              ..quantity = 1))
-            ..items.add(OrderItemDTO((b) => b
-              ..dish.name = "Fries"
-              ..quantity = 2))
-            ..deliveryAddress.location.latitude = 1.0
-            ..deliveryAddress.location.longitude = 1.0
-            ..restaurant.name = "Mc'Something"
-            ..restaurant.address.location.latitude = 0.0
-            ..restaurant.address.location.longitude = 0.0);
-          return OrderPage(order);
-          // CustomerHomePage()
+          // var order = Order((b) => b
+          //   ..status = OrderStatus.awaitingPickup
+          //   ..courier.fullName = "Jake P"
+          //   ..items.add(OrderItemDTO((b) => b
+          //     ..dish.name = "Burger"
+          //     ..quantity = 1))
+          //   ..items.add(OrderItemDTO((b) => b
+          //     ..dish.name = "Fries"
+          //     ..quantity = 2))
+          //   ..deliveryAddress.location.latitude = 1.0
+          //   ..deliveryAddress.location.longitude = 1.0
+          //   ..restaurant.name = "Mc'Something"
+          //   ..restaurant.address.location.latitude = 0.0
+          //   ..restaurant.address.location.longitude = 0.0);
+          // return OrderPage(order);
+          return CustomerHomePage();
         },
         "/basket": (context) => BasketPage(),
         "/checkout": (context) => CheckoutPage(),

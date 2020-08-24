@@ -1,4 +1,4 @@
-import 'package:delivery_customer/appTextStyle.dart';
+import 'package:delivery_customer/util/appTextStyle.dart';
 import 'package:delivery_customer/components/actionButton.dart';
 import 'package:delivery_customer/iocContainer.dart';
 import 'package:flutter/material.dart';
