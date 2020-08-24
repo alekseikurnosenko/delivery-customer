@@ -17,6 +17,7 @@ dependencies:
   dio: ^3.0.9
   rxdart: ^0.24.1
   firebase_messaging: ^6.0.16
+  sliding_up_panel: ^1.0.2
   flutter:
     sdk: flutter
   openapi:
