@@ -31,7 +31,8 @@ import 'package:openapi/model/order.dart';
 import 'package:openapi/model/order_assigned.dart';
 import 'package:openapi/model/order_canceled.dart';
 import 'package:openapi/model/order_delivered.dart';
-import 'package:openapi/model/order_item_dto.dart';
+import 'package:openapi/model/order_item.dart';
+import 'package:openapi/model/order_paid.dart';
 import 'package:openapi/model/order_picked_up.dart';
 import 'package:openapi/model/order_placed.dart';
 import 'package:openapi/model/order_preparation_finished.dart';
@@ -76,7 +77,8 @@ Order,
 OrderAssigned,
 OrderCanceled,
 OrderDelivered,
-OrderItemDTO,
+OrderItem,
+OrderPaid,
 OrderPickedUp,
 OrderPlaced,
 OrderPreparationFinished,
@@ -172,8 +174,11 @@ const FullType(BuiltList, const [const FullType(OrderCanceled)]),
 const FullType(BuiltList, const [const FullType(OrderDelivered)]),
 () => new ListBuilder<OrderDelivered>())
 ..addBuilderFactory(
-const FullType(BuiltList, const [const FullType(OrderItemDTO)]),
-() => new ListBuilder<OrderItemDTO>())
+const FullType(BuiltList, const [const FullType(OrderItem)]),
+() => new ListBuilder<OrderItem>())
+..addBuilderFactory(
+const FullType(BuiltList, const [const FullType(OrderPaid)]),
+() => new ListBuilder<OrderPaid>())
 ..addBuilderFactory(
 const FullType(BuiltList, const [const FullType(OrderPickedUp)]),
 () => new ListBuilder<OrderPickedUp>())

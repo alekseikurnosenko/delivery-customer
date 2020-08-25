@@ -13,14 +13,14 @@ Widget checkoutPage(BuildContext context) {
 
   var onOrderClicked = () async {
     orderButtonState.value = ButtonState.loading();
-    var order = await IocContainer().api.getBasketApi().checkout();
+    var order = await IocContainer().basketService.checkout();
 
     // TODO: somehow reset Food navigator
     Navigator.of(context).popUntil((route) {
       return route.isFirst;
     });
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => OrderPage(order.data)));
+        .push(MaterialPageRoute(builder: (context) => OrderPage(order)));
   };
 
   return SafeArea(

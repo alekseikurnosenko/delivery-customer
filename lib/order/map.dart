@@ -10,9 +10,15 @@ import 'package:openapi/model/lat_lng.dart' as API;
 class Map extends StatefulWidget {
   final API.LatLng pickup;
   final API.LatLng dropoff;
+  API.LatLng courier;
   final EdgeInsets padding;
 
-  const Map({Key key, this.pickup, this.dropoff, @required this.padding})
+  Map(
+      {Key key,
+      this.pickup,
+      this.dropoff,
+      this.courier,
+      @required this.padding})
       : super(key: key);
 
   @override
@@ -21,7 +27,8 @@ class Map extends StatefulWidget {
 
 class _MapState extends State<Map> {
   Completer<GoogleMapController> _controller = Completer();
-  Set<Marker> markers;
+  Set<Marker> markers = Set.of([]);
+  Marker courierMarker = Marker(markerId: MarkerId("courier"), visible: false);
 
   @override
   void initState() {
@@ -32,7 +39,8 @@ class _MapState extends State<Map> {
       MapIcon(
         Icons.home,
         invert: true,
-      )
+      ),
+      CarIcon()
     ], (bitmaps) {
       setState(() {
         markers = Set.of([
@@ -45,21 +53,25 @@ class _MapState extends State<Map> {
               anchor: Offset(0.5, 0.5),
               icon: BitmapDescriptor.fromBytes(bitmaps[1]),
               markerId: MarkerId("dropoff"),
-              position: widget.dropoff.toGoogleLatLng())
+              position: widget.dropoff.toGoogleLatLng()),
         ]);
+        courierMarker = Marker(
+            markerId: MarkerId("courier"),
+            anchor: Offset(0.5, 0.5),
+            zIndex: 500,
+            icon: BitmapDescriptor.fromBytes(bitmaps[2]),
+            visible: false);
       });
     }).generate(context);
   }
 
   void _onMapCreated(GoogleMapController controller) async {
-    var ownLocation = await Geolocator().getLastKnownPosition();
-
     var list = [
       widget.pickup.toGoogleLatLng(),
       widget.dropoff.toGoogleLatLng(),
     ];
-    if (ownLocation != null) {
-      list.add(ownLocation.toGoogleLatLng());
+    if (widget.courier != null) {
+      list.add(widget.courier.toGoogleLatLng());
     }
     LatLngBounds bounds = boundsFromLatLngList(list);
 
@@ -106,13 +118,17 @@ class _MapState extends State<Map> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.courier != null) {
+      courierMarker = courierMarker.copyWith(
+          visibleParam: true, positionParam: widget.courier.toGoogleLatLng());
+    }
     return GoogleMap(
         mapToolbarEnabled: false,
         myLocationButtonEnabled: false,
         zoomControlsEnabled: false,
         myLocationEnabled: false,
         padding: widget.padding,
-        markers: markers,
+        markers: markers.union(Set.of([courierMarker])),
         onMapCreated: _onMapCreated,
         initialCameraPosition:
             CameraPosition(zoom: 11, target: widget.pickup.toGoogleLatLng()));

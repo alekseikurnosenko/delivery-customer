@@ -1,11 +1,16 @@
-import 'package:delivery_customer/util/appTextStyle.dart';
+import 'package:delivery_customer/iocContainer.dart';
 import 'package:delivery_customer/order/map.dart';
+import 'package:delivery_customer/util/appTextStyle.dart';
+import 'package:delivery_customer/websocketClient.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:functional_widget_annotation/functional_widget_annotation.dart';
-import 'package:openapi/model/order.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' as GoogleMap;
+import 'package:openapi/model/courier_location_updated.dart';
+import 'package:openapi/model/lat_lng.dart';
+import 'package:openapi/model/order.dart';
 import 'package:openapi/model/order_status.dart';
+import 'package:openapi/serializers.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 part 'orderPage.g.dart';
@@ -141,11 +146,53 @@ Widget _sheetContent(BuildContext context, Order order) {
 
 @hwidget
 Widget orderPage(BuildContext context, Order order) {
+  var orderState = useState(order);
+  var courierLocation = useState<LatLng>(null);
   var height = MediaQuery.of(context).size.height;
   var peekHeight = height * 0.3;
   var maxHeight = height * 0.8;
 
   print(height);
+
+  useEffect(() {
+    var subscription = WebsocketClient().events.listen((event) {
+      /*
+      Unfortuantely the events we get here are from generated classes
+      with names like _$OrderPaid.
+      We could've used instanceOf check (event is OrderPaid), but then we cannot 
+      use swtch. 
+      */
+      var type =
+          standardSerializers.serializerForType(event.runtimeType).wireName;
+      switch (type) {
+        // Reload order if we know that status has changed
+        case 'OrderPaid':
+        case 'OrderAssigned':
+        case 'OrderPreparationStarted':
+        case 'OrderPreparationFinished':
+        case 'OrderPickedUp':
+        case 'OrderDelivered':
+        case 'OrderCanceled':
+          {
+            IocContainer()
+                .api
+                .getOrdersApi()
+                .order(order.id)
+                .then((value) => orderState.value = value.data);
+            break;
+          }
+        case 'CourierLocationUpdated':
+          {
+            var courierLocationUpdated = event as CourierLocationUpdated;
+            courierLocation.value = courierLocationUpdated.location;
+            break;
+          }
+      }
+    });
+    return subscription.cancel;
+  }, [order.id]);
+
+  var onBackPressed = () => Navigator.of(context).pop();
 
   return Scaffold(
       body: SlidingUpPanel(
@@ -154,8 +201,9 @@ Widget orderPage(BuildContext context, Order order) {
     borderRadius: BorderRadius.circular(24),
     body: Stack(children: [
       Map(
-          pickup: order.restaurant.address.location,
-          dropoff: order.deliveryAddress.location,
+          pickup: orderState.value.restaurant.address.location,
+          dropoff: orderState.value.deliveryAddress.location,
+          courier: courierLocation.value,
           padding: EdgeInsets.only(bottom: peekHeight + 24)),
       Container(
           margin: EdgeInsets.only(top: 24.0 + 8, left: 8),
@@ -166,9 +214,7 @@ Widget orderPage(BuildContext context, Order order) {
               backgroundColor: Colors.white,
               foregroundColor: Colors.black,
               child: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }))
+              onPressed: onBackPressed))
     ]),
     panel: Card(
       elevation: 12.0,
@@ -187,7 +233,7 @@ Widget orderPage(BuildContext context, Order order) {
                 borderRadius: BorderRadius.circular(16)),
           ),
           Container(height: 16),
-          _SheetContent(order),
+          _SheetContent(orderState.value),
         ],
       )),
     ),

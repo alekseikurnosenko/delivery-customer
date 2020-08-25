@@ -23,20 +23,20 @@ abstract class PageOrder implements Built<PageOrder, PageOrderBuilder> {
     bool get first;
     
         @nullable
-    @BuiltValueField(wireName: r'sort')
-    Sort get sort;
-    
-        @nullable
     @BuiltValueField(wireName: r'number')
     int get number;
     
         @nullable
-    @BuiltValueField(wireName: r'pageable')
-    Pageable get pageable;
+    @BuiltValueField(wireName: r'sort')
+    Sort get sort;
     
         @nullable
     @BuiltValueField(wireName: r'numberOfElements')
     int get numberOfElements;
+    
+        @nullable
+    @BuiltValueField(wireName: r'pageable')
+    Pageable get pageable;
     
         @nullable
     @BuiltValueField(wireName: r'last')

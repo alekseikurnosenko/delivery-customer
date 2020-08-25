@@ -36,16 +36,22 @@ class _$PageOrderSerializer implements StructuredSerializer<PageOrder> {
         ..add(serializers.serialize(object.first,
             specifiedType: const FullType(bool)));
     }
+    if (object.number != null) {
+      result
+        ..add('number')
+        ..add(serializers.serialize(object.number,
+            specifiedType: const FullType(int)));
+    }
     if (object.sort != null) {
       result
         ..add('sort')
         ..add(serializers.serialize(object.sort,
             specifiedType: const FullType(Sort)));
     }
-    if (object.number != null) {
+    if (object.numberOfElements != null) {
       result
-        ..add('number')
-        ..add(serializers.serialize(object.number,
+        ..add('numberOfElements')
+        ..add(serializers.serialize(object.numberOfElements,
             specifiedType: const FullType(int)));
     }
     if (object.pageable != null) {
@@ -53,12 +59,6 @@ class _$PageOrderSerializer implements StructuredSerializer<PageOrder> {
         ..add('pageable')
         ..add(serializers.serialize(object.pageable,
             specifiedType: const FullType(Pageable)));
-    }
-    if (object.numberOfElements != null) {
-      result
-        ..add('numberOfElements')
-        ..add(serializers.serialize(object.numberOfElements,
-            specifiedType: const FullType(int)));
     }
     if (object.last != null) {
       result
@@ -111,21 +111,21 @@ class _$PageOrderSerializer implements StructuredSerializer<PageOrder> {
           result.first = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
           break;
+        case 'number':
+          result.number = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
         case 'sort':
           result.sort.replace(serializers.deserialize(value,
               specifiedType: const FullType(Sort)) as Sort);
           break;
-        case 'number':
-          result.number = serializers.deserialize(value,
+        case 'numberOfElements':
+          result.numberOfElements = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'pageable':
           result.pageable.replace(serializers.deserialize(value,
               specifiedType: const FullType(Pageable)) as Pageable);
-          break;
-        case 'numberOfElements':
-          result.numberOfElements = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
           break;
         case 'last':
           result.last = serializers.deserialize(value,
@@ -160,13 +160,13 @@ class _$PageOrder extends PageOrder {
   @override
   final bool first;
   @override
-  final Sort sort;
-  @override
   final int number;
   @override
-  final Pageable pageable;
+  final Sort sort;
   @override
   final int numberOfElements;
+  @override
+  final Pageable pageable;
   @override
   final bool last;
   @override
@@ -183,10 +183,10 @@ class _$PageOrder extends PageOrder {
       {this.totalPages,
       this.totalElements,
       this.first,
-      this.sort,
       this.number,
-      this.pageable,
+      this.sort,
       this.numberOfElements,
+      this.pageable,
       this.last,
       this.size,
       this.content,
@@ -207,10 +207,10 @@ class _$PageOrder extends PageOrder {
         totalPages == other.totalPages &&
         totalElements == other.totalElements &&
         first == other.first &&
-        sort == other.sort &&
         number == other.number &&
-        pageable == other.pageable &&
+        sort == other.sort &&
         numberOfElements == other.numberOfElements &&
+        pageable == other.pageable &&
         last == other.last &&
         size == other.size &&
         content == other.content &&
@@ -231,10 +231,10 @@ class _$PageOrder extends PageOrder {
                                         $jc($jc(0, totalPages.hashCode),
                                             totalElements.hashCode),
                                         first.hashCode),
-                                    sort.hashCode),
-                                number.hashCode),
-                            pageable.hashCode),
-                        numberOfElements.hashCode),
+                                    number.hashCode),
+                                sort.hashCode),
+                            numberOfElements.hashCode),
+                        pageable.hashCode),
                     last.hashCode),
                 size.hashCode),
             content.hashCode),
@@ -247,10 +247,10 @@ class _$PageOrder extends PageOrder {
           ..add('totalPages', totalPages)
           ..add('totalElements', totalElements)
           ..add('first', first)
-          ..add('sort', sort)
           ..add('number', number)
-          ..add('pageable', pageable)
+          ..add('sort', sort)
           ..add('numberOfElements', numberOfElements)
+          ..add('pageable', pageable)
           ..add('last', last)
           ..add('size', size)
           ..add('content', content)
@@ -274,22 +274,22 @@ class PageOrderBuilder implements Builder<PageOrder, PageOrderBuilder> {
   bool get first => _$this._first;
   set first(bool first) => _$this._first = first;
 
-  SortBuilder _sort;
-  SortBuilder get sort => _$this._sort ??= new SortBuilder();
-  set sort(SortBuilder sort) => _$this._sort = sort;
-
   int _number;
   int get number => _$this._number;
   set number(int number) => _$this._number = number;
 
-  PageableBuilder _pageable;
-  PageableBuilder get pageable => _$this._pageable ??= new PageableBuilder();
-  set pageable(PageableBuilder pageable) => _$this._pageable = pageable;
+  SortBuilder _sort;
+  SortBuilder get sort => _$this._sort ??= new SortBuilder();
+  set sort(SortBuilder sort) => _$this._sort = sort;
 
   int _numberOfElements;
   int get numberOfElements => _$this._numberOfElements;
   set numberOfElements(int numberOfElements) =>
       _$this._numberOfElements = numberOfElements;
+
+  PageableBuilder _pageable;
+  PageableBuilder get pageable => _$this._pageable ??= new PageableBuilder();
+  set pageable(PageableBuilder pageable) => _$this._pageable = pageable;
 
   bool _last;
   bool get last => _$this._last;
@@ -315,10 +315,10 @@ class PageOrderBuilder implements Builder<PageOrder, PageOrderBuilder> {
       _totalPages = _$v.totalPages;
       _totalElements = _$v.totalElements;
       _first = _$v.first;
-      _sort = _$v.sort?.toBuilder();
       _number = _$v.number;
-      _pageable = _$v.pageable?.toBuilder();
+      _sort = _$v.sort?.toBuilder();
       _numberOfElements = _$v.numberOfElements;
+      _pageable = _$v.pageable?.toBuilder();
       _last = _$v.last;
       _size = _$v.size;
       _content = _$v.content?.toBuilder();
@@ -350,10 +350,10 @@ class PageOrderBuilder implements Builder<PageOrder, PageOrderBuilder> {
               totalPages: totalPages,
               totalElements: totalElements,
               first: first,
-              sort: _sort?.build(),
               number: number,
-              pageable: _pageable?.build(),
+              sort: _sort?.build(),
               numberOfElements: numberOfElements,
+              pageable: _pageable?.build(),
               last: last,
               size: size,
               content: _content?.build(),

@@ -17,3 +17,10 @@ class MapIcon extends StatelessWidget {
   Widget build(BuildContext _context) =>
       mapIcon(_context, icon, invert: invert);
 }
+
+class CarIcon extends StatelessWidget {
+  const CarIcon({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext _context) => carIcon(_context);
+}

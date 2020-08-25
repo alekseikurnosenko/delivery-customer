@@ -1,5 +1,6 @@
 import 'package:delivery_customer/iocContainer.dart';
 import 'package:openapi/model/basket.dart';
+import 'package:openapi/model/order.dart';
 import 'package:openapi/model/remove_from_basket_input.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:openapi/model/add_item_to_basket_input.dart';
@@ -26,5 +27,12 @@ class BasketService {
     var basket =
         await IocContainer().api.getBasketApi().removeItemFromBasket(input);
     _basketSubject.sink.add(basket.data);
+  }
+
+  Future<Order> checkout() async {
+    var order = await IocContainer().api.getBasketApi().checkout();
+    // So here we can assumed that basket is already cleared
+    _basketSubject.sink.add(null);
+    return order.data;
   }
 }

@@ -28,7 +28,7 @@ class _$OrderSerializer implements StructuredSerializer<Order> {
       result
         ..add('createdAt')
         ..add(serializers.serialize(object.createdAt,
-            specifiedType: const FullType(DateTime)));
+            specifiedType: const FullType(String)));
     }
     if (object.totalAmount != null) {
       result
@@ -64,8 +64,8 @@ class _$OrderSerializer implements StructuredSerializer<Order> {
       result
         ..add('items')
         ..add(serializers.serialize(object.items,
-            specifiedType: const FullType(
-                BuiltList, const [const FullType(OrderItemDTO)])));
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(OrderItem)])));
     }
     return result;
   }
@@ -87,7 +87,7 @@ class _$OrderSerializer implements StructuredSerializer<Order> {
           break;
         case 'createdAt':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime;
+              specifiedType: const FullType(String)) as String;
           break;
         case 'totalAmount':
           result.totalAmount.replace(serializers.deserialize(value,
@@ -112,7 +112,7 @@ class _$OrderSerializer implements StructuredSerializer<Order> {
         case 'items':
           result.items.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(OrderItemDTO)]))
+                      BuiltList, const [const FullType(OrderItem)]))
               as BuiltList<Object>);
           break;
       }
@@ -126,7 +126,7 @@ class _$Order extends Order {
   @override
   final String id;
   @override
-  final DateTime createdAt;
+  final String createdAt;
   @override
   final MoneyView totalAmount;
   @override
@@ -138,7 +138,7 @@ class _$Order extends Order {
   @override
   final OrderStatus status;
   @override
-  final BuiltList<OrderItemDTO> items;
+  final BuiltList<OrderItem> items;
 
   factory _$Order([void Function(OrderBuilder) updates]) =>
       (new OrderBuilder()..update(updates)).build();
@@ -213,9 +213,9 @@ class OrderBuilder implements Builder<Order, OrderBuilder> {
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  DateTime _createdAt;
-  DateTime get createdAt => _$this._createdAt;
-  set createdAt(DateTime createdAt) => _$this._createdAt = createdAt;
+  String _createdAt;
+  String get createdAt => _$this._createdAt;
+  set createdAt(String createdAt) => _$this._createdAt = createdAt;
 
   MoneyViewBuilder _totalAmount;
   MoneyViewBuilder get totalAmount =>
@@ -243,10 +243,10 @@ class OrderBuilder implements Builder<Order, OrderBuilder> {
   OrderStatus get status => _$this._status;
   set status(OrderStatus status) => _$this._status = status;
 
-  ListBuilder<OrderItemDTO> _items;
-  ListBuilder<OrderItemDTO> get items =>
-      _$this._items ??= new ListBuilder<OrderItemDTO>();
-  set items(ListBuilder<OrderItemDTO> items) => _$this._items = items;
+  ListBuilder<OrderItem> _items;
+  ListBuilder<OrderItem> get items =>
+      _$this._items ??= new ListBuilder<OrderItem>();
+  set items(ListBuilder<OrderItem> items) => _$this._items = items;
 
   OrderBuilder();
 

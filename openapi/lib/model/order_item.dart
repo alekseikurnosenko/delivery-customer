@@ -2,9 +2,9 @@
         import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-part 'order_item_dto.g.dart';
+part 'order_item.g.dart';
 
-abstract class OrderItemDTO implements Built<OrderItemDTO, OrderItemDTOBuilder> {
+abstract class OrderItem implements Built<OrderItem, OrderItemBuilder> {
 
     
         @nullable
@@ -16,10 +16,10 @@ abstract class OrderItemDTO implements Built<OrderItemDTO, OrderItemDTOBuilder> 
     int get quantity;
 
     // Boilerplate code needed to wire-up generated code
-    OrderItemDTO._();
+    OrderItem._();
 
-    factory OrderItemDTO([updates(OrderItemDTOBuilder b)]) = _$OrderItemDTO;
-    static Serializer<OrderItemDTO> get serializer => _$orderItemDTOSerializer;
+    factory OrderItem([updates(OrderItemBuilder b)]) = _$OrderItem;
+    static Serializer<OrderItem> get serializer => _$orderItemSerializer;
 
 }
 

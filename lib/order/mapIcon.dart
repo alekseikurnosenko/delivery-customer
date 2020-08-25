@@ -30,3 +30,17 @@ Widget mapIcon(BuildContext context, IconData icon, {bool invert = false}) {
     ),
   );
 }
+
+@swidget
+Widget carIcon(BuildContext context) {
+  return Container(
+    width: 18,
+    height: 18,
+    decoration: BoxDecoration(color: Colors.blue[700], shape: BoxShape.circle),
+    child: Icon(
+      Icons.directions_car,
+      color: Colors.white,
+      size: 10,
+    ),
+  );
+}

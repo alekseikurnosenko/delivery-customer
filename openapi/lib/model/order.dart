@@ -1,8 +1,8 @@
             import 'package:openapi/model/address.dart';
+            import 'package:openapi/model/order_item.dart';
             import 'package:openapi/model/order_status.dart';
             import 'package:built_collection/built_collection.dart';
             import 'package:openapi/model/restaurant.dart';
-            import 'package:openapi/model/order_item_dto.dart';
             import 'package:openapi/model/courier.dart';
             import 'package:openapi/model/money_view.dart';
         import 'package:built_value/built_value.dart';
@@ -19,7 +19,7 @@ abstract class Order implements Built<Order, OrderBuilder> {
     
         @nullable
     @BuiltValueField(wireName: r'createdAt')
-    DateTime get createdAt;
+    String get createdAt;
     
         @nullable
     @BuiltValueField(wireName: r'totalAmount')
@@ -44,7 +44,7 @@ abstract class Order implements Built<Order, OrderBuilder> {
     
         @nullable
     @BuiltValueField(wireName: r'items')
-    BuiltList<OrderItemDTO> get items;
+    BuiltList<OrderItem> get items;
 
     // Boilerplate code needed to wire-up generated code
     Order._();

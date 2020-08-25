@@ -1,22 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'order_item_dto.dart';
+part of 'order_item.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<OrderItemDTO> _$orderItemDTOSerializer =
-    new _$OrderItemDTOSerializer();
+Serializer<OrderItem> _$orderItemSerializer = new _$OrderItemSerializer();
 
-class _$OrderItemDTOSerializer implements StructuredSerializer<OrderItemDTO> {
+class _$OrderItemSerializer implements StructuredSerializer<OrderItem> {
   @override
-  final Iterable<Type> types = const [OrderItemDTO, _$OrderItemDTO];
+  final Iterable<Type> types = const [OrderItem, _$OrderItem];
   @override
-  final String wireName = 'OrderItemDTO';
+  final String wireName = 'OrderItem';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, OrderItemDTO object,
+  Iterable<Object> serialize(Serializers serializers, OrderItem object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[];
     if (object.dish != null) {
@@ -35,9 +34,9 @@ class _$OrderItemDTOSerializer implements StructuredSerializer<OrderItemDTO> {
   }
 
   @override
-  OrderItemDTO deserialize(Serializers serializers, Iterable<Object> serialized,
+  OrderItem deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new OrderItemDTOBuilder();
+    final result = new OrderItemBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -60,28 +59,28 @@ class _$OrderItemDTOSerializer implements StructuredSerializer<OrderItemDTO> {
   }
 }
 
-class _$OrderItemDTO extends OrderItemDTO {
+class _$OrderItem extends OrderItem {
   @override
   final Dish dish;
   @override
   final int quantity;
 
-  factory _$OrderItemDTO([void Function(OrderItemDTOBuilder) updates]) =>
-      (new OrderItemDTOBuilder()..update(updates)).build();
+  factory _$OrderItem([void Function(OrderItemBuilder) updates]) =>
+      (new OrderItemBuilder()..update(updates)).build();
 
-  _$OrderItemDTO._({this.dish, this.quantity}) : super._();
+  _$OrderItem._({this.dish, this.quantity}) : super._();
 
   @override
-  OrderItemDTO rebuild(void Function(OrderItemDTOBuilder) updates) =>
+  OrderItem rebuild(void Function(OrderItemBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  OrderItemDTOBuilder toBuilder() => new OrderItemDTOBuilder()..replace(this);
+  OrderItemBuilder toBuilder() => new OrderItemBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is OrderItemDTO &&
+    return other is OrderItem &&
         dish == other.dish &&
         quantity == other.quantity;
   }
@@ -93,16 +92,15 @@ class _$OrderItemDTO extends OrderItemDTO {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('OrderItemDTO')
+    return (newBuiltValueToStringHelper('OrderItem')
           ..add('dish', dish)
           ..add('quantity', quantity))
         .toString();
   }
 }
 
-class OrderItemDTOBuilder
-    implements Builder<OrderItemDTO, OrderItemDTOBuilder> {
-  _$OrderItemDTO _$v;
+class OrderItemBuilder implements Builder<OrderItem, OrderItemBuilder> {
+  _$OrderItem _$v;
 
   DishBuilder _dish;
   DishBuilder get dish => _$this._dish ??= new DishBuilder();
@@ -112,9 +110,9 @@ class OrderItemDTOBuilder
   int get quantity => _$this._quantity;
   set quantity(int quantity) => _$this._quantity = quantity;
 
-  OrderItemDTOBuilder();
+  OrderItemBuilder();
 
-  OrderItemDTOBuilder get _$this {
+  OrderItemBuilder get _$this {
     if (_$v != null) {
       _dish = _$v.dish?.toBuilder();
       _quantity = _$v.quantity;
@@ -124,24 +122,24 @@ class OrderItemDTOBuilder
   }
 
   @override
-  void replace(OrderItemDTO other) {
+  void replace(OrderItem other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$OrderItemDTO;
+    _$v = other as _$OrderItem;
   }
 
   @override
-  void update(void Function(OrderItemDTOBuilder) updates) {
+  void update(void Function(OrderItemBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$OrderItemDTO build() {
-    _$OrderItemDTO _$result;
+  _$OrderItem build() {
+    _$OrderItem _$result;
     try {
       _$result =
-          _$v ?? new _$OrderItemDTO._(dish: _dish?.build(), quantity: quantity);
+          _$v ?? new _$OrderItem._(dish: _dish?.build(), quantity: quantity);
     } catch (_) {
       String _$failedField;
       try {
@@ -149,7 +147,7 @@ class OrderItemDTOBuilder
         _dish?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'OrderItemDTO', _$failedField, e.toString());
+            'OrderItem', _$failedField, e.toString());
       }
       rethrow;
     }
