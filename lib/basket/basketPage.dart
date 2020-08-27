@@ -122,17 +122,28 @@ Widget basketPage(BuildContext context) {
       .toList();
   list.removeLast();
 
-  return SafeArea(
-      child: Scaffold(
-          body: Column(children: [
-    topBar,
-    Expanded(
-        child: SingleChildScrollView(
-      child: Column(children: [Container(child: Column(children: list))]),
-    )),
-    Padding(
-      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-      child: _ContinueButton(basket.data),
-    )
-  ])));
+  return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
+
+        // leading: IconButton(icon: Icon(Icons.close), onPressed: () {}),
+        elevation: 1,
+        centerTitle: true,
+        title: Text(
+          basket.data.restaurant.name,
+          style: AppTextStyle.sectionHeader(context),
+        ),
+      ),
+      body: Column(children: [
+        // topBar,
+        Expanded(
+            child: SingleChildScrollView(
+          child: Column(children: [Container(child: Column(children: list))]),
+        )),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          child: _ContinueButton(basket.data),
+        )
+      ]));
 }

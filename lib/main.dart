@@ -47,6 +47,13 @@ class MyApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
           buttonTheme: ButtonThemeData(height: 36)),
       initialRoute: "/",
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case "/basket":
+            return MaterialPageRoute(
+                builder: (context) => BasketPage(), fullscreenDialog: true);
+        }
+      },
       routes: {
         "/": (context) {
           // var order = Order((b) => b
@@ -66,7 +73,6 @@ class MyApp extends StatelessWidget {
           // return OrderPage(order);
           return CustomerHomePage();
         },
-        "/basket": (context) => BasketPage(),
         "/checkout": (context) => CheckoutPage(),
         // "/order": (context) => OrderPage(), ?? TODO: check the how to better accept params here
       },

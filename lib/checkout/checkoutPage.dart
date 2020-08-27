@@ -42,11 +42,17 @@ Widget _paymentMethod(
 
 @hwidget
 Widget _paymentSection(BuildContext context) {
-  var methods = ["Credit card", "Cash"];
+  var methods = ["Credit card [••2598]", "Cash"];
   var selectedPaymentMethod = useState<String>(methods.first);
 
-  var methodWidgets = methods.map((m) => _PaymentMethod(m,
-      selectedPaymentMethod.value == m, () => selectedPaymentMethod.value = m));
+  var methodWidgets = methods.expand((m) => [
+        _PaymentMethod(m, selectedPaymentMethod.value == m,
+            () => selectedPaymentMethod.value = m),
+        Divider(
+          height: 1,
+          indent: 16,
+        ),
+      ]);
 
   return Container(
       padding: EdgeInsets.all(0),
@@ -56,10 +62,47 @@ Widget _paymentSection(BuildContext context) {
           Padding(
               padding: EdgeInsets.all(16),
               child: Text(
-                "Payment method",
+                "Pay with",
                 style: AppTextStyle.sectionHeader(context),
               )),
           ...methodWidgets,
+        ],
+      ));
+}
+
+@swidget
+Widget _deliveryDetails(BuildContext context) {
+  return Container(
+      padding: EdgeInsets.all(0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+              padding: EdgeInsets.all(16),
+              child: Text(
+                "Delivery details",
+                style: AppTextStyle.sectionHeader(context),
+              )),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text("Address"), Text("2312 Musselwhite Ave, 1/2")],
+              )),
+          Divider(
+            height: 1,
+            indent: 16,
+          ),
+          Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text("Drop-off"), Text("Hand it to me")],
+              )),
+          Divider(
+            height: 1,
+            indent: 16,
+          ),
         ],
       ));
 }
@@ -82,15 +125,23 @@ Widget checkoutPage(BuildContext context) {
 
   return Scaffold(
     appBar: AppBar(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       iconTheme: IconThemeData(color: Colors.black),
-      elevation: 0,
+      elevation: 1,
       centerTitle: true,
       title: Text("Checkout", style: AppTextStyle.sectionHeader(context)),
     ),
+    backgroundColor: Colors.white,
     body: Stack(children: [
       Column(
-        children: [_PaymentSection()],
+        children: [
+          _DeliveryDetails(),
+          Container(
+            height: 8,
+            color: Colors.grey[200],
+          ),
+          _PaymentSection(),
+        ],
       ),
       Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

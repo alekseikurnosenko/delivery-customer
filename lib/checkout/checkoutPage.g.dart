@@ -28,6 +28,13 @@ class _PaymentSection extends HookWidget {
   Widget build(BuildContext _context) => _paymentSection(_context);
 }
 
+class _DeliveryDetails extends StatelessWidget {
+  const _DeliveryDetails({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext _context) => _deliveryDetails(_context);
+}
+
 class CheckoutPage extends HookWidget {
   const CheckoutPage({Key key}) : super(key: key);
 
