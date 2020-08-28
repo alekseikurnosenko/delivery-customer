@@ -24,6 +24,15 @@ class _DishItem extends StatelessWidget {
   Widget build(BuildContext _context) => _dishItem(_context, dish, restaurant);
 }
 
+class _Header extends StatelessWidget {
+  const _Header(this.restaurant, {Key key}) : super(key: key);
+
+  final Restaurant restaurant;
+
+  @override
+  Widget build(BuildContext _context) => _header(_context, restaurant);
+}
+
 class RestaurantPage extends HookWidget {
   const RestaurantPage(this.restaurant, {Key key}) : super(key: key);
 

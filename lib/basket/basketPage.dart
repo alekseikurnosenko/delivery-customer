@@ -135,6 +135,7 @@ Widget basketPage(BuildContext context) {
           style: AppTextStyle.sectionHeader(context),
         ),
       ),
+      backgroundColor: Colors.white,
       body: Column(children: [
         // topBar,
         Expanded(

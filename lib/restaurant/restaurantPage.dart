@@ -1,4 +1,6 @@
-import 'package:delivery_customer/food/addToBasketDialog.dart';
+import 'dart:math';
+
+import 'package:delivery_customer/restaurant/addToBasketDialog.dart';
 import 'package:delivery_customer/util/appTextStyle.dart';
 import 'package:delivery_customer/homePage.dart';
 import 'package:delivery_customer/iocContainer.dart';
@@ -111,8 +113,34 @@ Widget _dishItem(BuildContext context, Dish dish, Restaurant restaurant) {
           ])));
 }
 
+@swidget
+Widget _header(BuildContext context, Restaurant restaurant) {
+  return Padding(
+      padding: EdgeInsets.only(top: 56.0 + 8, left: 8, right: 8),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(restaurant.name, style: AppTextStyle.header(context)),
+        Text(
+          "Chinese, Asian",
+          style: AppTextStyle.copy(context),
+        ),
+        Container(height: 4),
+        Row(
+          children: [
+            RestaurantRating(4.8),
+            Container(width: 4),
+            Text("(500+) • 1.2 km • \$\$", style: AppTextStyle.copy(context)),
+          ],
+        ),
+        Container(height: 16),
+        _DeliveryDetails(),
+      ]));
+}
+
 @hwidget
 Widget restaurantPage(BuildContext context, Restaurant restaurant) {
+  var scrollController = useMemoized(() => ScrollController());
+  var appBarVisible = useState(false);
+
   var dishes = useState<List<Dish>>([]);
   useEffect(() {
     IocContainer()
@@ -120,40 +148,53 @@ Widget restaurantPage(BuildContext context, Restaurant restaurant) {
         .getRestaurantsApi()
         .restaurantDishes(restaurant.id)
         .then((value) => dishes.value = value.data);
+
+    scrollController.addListener(() {
+      print(scrollController.offset);
+      appBarVisible.value = scrollController.offset > 150;
+    });
   }, []);
 
+  var onBackButtonPressed = () => Navigator.of(context).pop();
+
   return Scaffold(
-      body: Container(
-    padding: EdgeInsets.symmetric(vertical: 16),
-    child: Column(children: [
-      Padding(
-          padding: EdgeInsets.symmetric(horizontal: 8),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(restaurant.name, style: AppTextStyle.header(context)),
-            Text(
-              "Chinese, Asian",
-              style: AppTextStyle.copy(context),
-            ),
-            Container(height: 4),
-            Row(
-              children: [
-                RestaurantRating(4.8),
-                Container(width: 4),
-                Text("(500+) • 1.2 km • \$\$",
-                    style: AppTextStyle.copy(context)),
-              ],
-            ),
-            Container(height: 16),
-            _DeliveryDetails(),
-          ])),
-      Expanded(
-        child: ListView.builder(
-            itemCount: dishes.value.length,
+    body: Container(
+      color: Colors.white,
+      child: Stack(children: [
+        ListView.builder(
+            controller: scrollController,
             itemBuilder: (context, index) {
-              return _DishItem(dishes.value[index], restaurant);
-            }),
-      )
-    ]),
-  ));
+              if (index == 0) {
+                return _Header(restaurant);
+              }
+              return _DishItem(
+                  dishes.value[(index - 1) % dishes.value.length], restaurant);
+            },
+            itemCount: 1 + dishes.value.length * 3),
+        Container(
+            margin: EdgeInsets.only(top: 8, left: 8),
+            child: RawMaterialButton(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                constraints: BoxConstraints.tight(Size(40.0, 40.0)),
+                fillColor: Colors.white,
+                child: Icon(Icons.arrow_back),
+                shape: CircleBorder(),
+                onPressed: onBackButtonPressed)),
+        appBarVisible.value
+            ? Container(
+                height: kToolbarHeight,
+                child: AppBar(
+                  backgroundColor: Colors.white,
+                  iconTheme: IconThemeData(color: Colors.black),
+                  elevation: 1,
+                  centerTitle: true,
+                  title: Text(
+                    restaurant.name,
+                    style: AppTextStyle.sectionHeader(context),
+                  ),
+                ))
+            : Container()
+      ]),
+    ),
+  );
 }

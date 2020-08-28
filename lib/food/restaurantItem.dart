@@ -1,4 +1,4 @@
-import 'package:delivery_customer/food/restaurantPage.dart';
+import 'package:delivery_customer/restaurant/restaurantPage.dart';
 import 'package:delivery_customer/util/appTextStyle.dart';
 import 'package:delivery_customer/homePage.dart';
 import 'package:flutter/material.dart';
