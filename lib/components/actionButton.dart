@@ -15,24 +15,27 @@ class LoadingButtonState implements ButtonState {}
 
 class DisabledButtonState implements ButtonState {}
 
-abstract class ButtonStyle {
-  factory ButtonStyle.primary() => PrimaryButtonStyle();
+abstract class ActionButtonStyle {
+  factory ActionButtonStyle.primary() => PrimaryButtonStyle();
 
-  factory ButtonStyle.secondary() => SecondaryButtonStyle();
+  factory ActionButtonStyle.secondary() => SecondaryButtonStyle();
 }
 
-class PrimaryButtonStyle implements ButtonStyle {}
+class PrimaryButtonStyle implements ActionButtonStyle {}
 
-class SecondaryButtonStyle implements ButtonStyle {}
+class SecondaryButtonStyle implements ActionButtonStyle {}
 
 @swidget
 Widget actionButton(BuildContext context,
-    {ButtonState state, ButtonStyle style, Text label, Function onPressed}) {
+    {ButtonState state,
+    ActionButtonStyle style,
+    Text label,
+    Function onPressed}) {
   final ButtonThemeData buttonTheme = ButtonTheme.of(context);
   final theme = Theme.of(context);
 
   var currentState = state ?? ButtonState.normal();
-  var currentStyle = style ?? ButtonStyle.primary();
+  var currentStyle = style ?? ActionButtonStyle.primary();
 
   Color fillColor;
   Color textColor;
@@ -46,9 +49,8 @@ Widget actionButton(BuildContext context,
       textColor = buttonTheme.colorScheme.secondary;
       break;
     default:
-     throw Exception("Unknown buttonStyle: $currentStyle");
+      throw Exception("Unknown buttonStyle: $currentStyle");
   }
-
 
   if (currentState is NormalButtonState ||
       currentState is DisabledButtonState) {
@@ -57,8 +59,7 @@ Widget actionButton(BuildContext context,
           borderRadius: BorderRadius.all(Radius.circular(16.0)),
         ),
         fillColor: fillColor,
-        textStyle: theme.textTheme.button
-            .copyWith(color: textColor),
+        textStyle: theme.textTheme.button.copyWith(color: textColor),
         child: label,
         onPressed: currentState is DisabledButtonState ? null : onPressed);
   }

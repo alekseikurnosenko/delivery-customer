@@ -62,7 +62,7 @@ class _MapState extends State<Map> {
             icon: BitmapDescriptor.fromBytes(bitmaps[2]),
             visible: false);
       });
-    }).generate(context);
+    }); //.generate(context);
   }
 
   void _onMapCreated(GoogleMapController controller) async {

@@ -13,7 +13,7 @@ class ActionButton extends StatelessWidget {
 
   final ButtonState state;
 
-  final ButtonStyle style;
+  final ActionButtonStyle style;
 
   final Text label;
 

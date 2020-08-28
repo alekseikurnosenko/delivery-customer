@@ -83,7 +83,7 @@ Widget addToBasketDialog(
                 ]),
                 ActionButton(
                   onPressed: onAddClick,
-                  style: ButtonStyle.primary(),
+                  style: ActionButtonStyle.primary(),
                   label: Text(totalPrice),
                 )
               ])
