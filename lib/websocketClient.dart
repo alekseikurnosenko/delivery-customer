@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:openapi/model/courier_location_updated.dart';
-import 'package:openapi/model/delivery_requested.dart';
 import 'package:openapi/model/order_assigned.dart';
 import 'package:openapi/model/order_canceled.dart';
 import 'package:openapi/model/order_delivered.dart';
@@ -10,18 +10,27 @@ import 'package:openapi/model/order_picked_up.dart';
 import 'package:openapi/model/order_preparation_finished.dart';
 import 'package:openapi/model/order_preparation_started.dart';
 import 'package:openapi/serializers.dart';
+import 'package:web_socket_channel/html.dart';
 import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'main.dart';
 
 class WebsocketClient {
-  final _channel = IOWebSocketChannel.connect(
-      'wss://enigmatic-garden-23553.herokuapp.com/ws',
-      headers: {"Authorization": "Bearer ${MyApp.token}"});
+  WebSocketChannel _channel;
 
   Stream<dynamic> events;
 
   WebsocketClient() {
+    if (kIsWeb) {
+      _channel = HtmlWebSocketChannel.connect(
+          'wss://enigmatic-garden-23553.herokuapp.com/ws');
+    } else {
+      _channel = IOWebSocketChannel.connect(
+          'wss://enigmatic-garden-23553.herokuapp.com/ws',
+          headers: {"Authorization": "Bearer ${MyApp.token}"});
+    }
+
     events = _channel.stream.map((event) {
       var message = jsonDecode(event);
       var type = message['type'];
