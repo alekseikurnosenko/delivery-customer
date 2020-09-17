@@ -10,6 +10,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:openapi/model/basket.dart';
 import 'package:openapi/model/restaurant.dart';
+import 'package:provider/provider.dart';
 
 part 'homePage.g.dart';
 
@@ -53,18 +54,18 @@ class HomePage {
 
 @hwidget
 Widget customerHomePage(BuildContext context) {
+  var basketService = Provider.of<IocContainer>(context).basketService;
   var foodPage = useMemoized(() => HomePage(), []);
   var ordersPage = useMemoized(() => HomePage(), []);
   var pages = [foodPage, ordersPage];
   var currentPageIndex = useState(0);
 
   useEffect(() {
-    IocContainer().basketService.fetch();
+    basketService.fetch();
   }, []);
 
   // Subsribe to basket
-  var basket =
-      useStream(useMemoized(() => IocContainer().basketService.basket, []));
+  var basket = useStream(useMemoized(() => basketService.basket, []));
   var isBasketButtonVisible = basket.hasData && basket.data.items.length > 0;
 
   return Scaffold(

@@ -1,5 +1,6 @@
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:delivery_customer/main.dart' as app;
+import 'package:openapi/api/basket_api.dart';
 
 void main() {
   // This line enables the extension.

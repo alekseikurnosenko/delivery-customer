@@ -8,6 +8,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:openapi/model/dish.dart';
 import 'package:openapi/model/restaurant.dart';
+import 'package:provider/provider.dart';
 
 part 'restaurantPage.g.dart';
 
@@ -137,14 +138,13 @@ Widget _header(BuildContext context, Restaurant restaurant) {
 
 @hwidget
 Widget restaurantPage(BuildContext context, Restaurant restaurant) {
+  var restaurantsApi = Provider.of<IocContainer>(context).restaurantsApi;
   var scrollController = useMemoized(() => ScrollController());
   var appBarVisible = useState(false);
 
   var dishes = useState<List<Dish>>([]);
   useEffect(() {
-    IocContainer()
-        .api
-        .getRestaurantsApi()
+    restaurantsApi
         .restaurantDishes(restaurant.id)
         .then((value) => dishes.value = value.data);
 

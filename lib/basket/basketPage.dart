@@ -6,6 +6,7 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:openapi/model/basket.dart';
 import 'package:openapi/model/basket_item.dart';
 import 'package:openapi/model/remove_from_basket_input.dart';
+import 'package:provider/provider.dart';
 
 part 'basketPage.g.dart';
 
@@ -73,7 +74,7 @@ Widget _continueButton(BuildContext context, Basket basket) =>
 
 @hwidget
 Widget basketPage(BuildContext context) {
-  var basketService = IocContainer().basketService;
+  var basketService = Provider.of<IocContainer>(context).basketService;
   var basket = useStream(useMemoized(() => basketService.basket));
 
   var onDishDeleteClick = (BasketItem basketItem) {

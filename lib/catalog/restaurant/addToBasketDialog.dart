@@ -8,12 +8,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:openapi/model/dish.dart';
 import 'package:openapi/model/add_item_to_basket_input.dart';
 import 'package:openapi/model/restaurant.dart';
+import 'package:provider/provider.dart';
 
 part 'addToBasketDialog.g.dart';
 
 @hwidget
 Widget addToBasketDialog(
     BuildContext context, Dish dish, Restaurant restaurant) {
+  var basketService = Provider.of<IocContainer>(context).basketService;
   var count = useState(1);
   var onPlusClick = () {
     count.value++;
@@ -36,7 +38,7 @@ Widget addToBasketDialog(
       ..restaurantId = restaurant.id
       ..forceNewBasket = true
       ..quantity = count.value);
-    await IocContainer().basketService.addToBasket(input);
+    await basketService.addToBasket(input);
 
     Navigator.pop(context);
   };

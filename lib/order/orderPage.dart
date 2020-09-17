@@ -11,6 +11,7 @@ import 'package:openapi/model/lat_lng.dart';
 import 'package:openapi/model/order.dart';
 import 'package:openapi/model/order_status.dart';
 import 'package:openapi/serializers.dart';
+import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 part 'orderPage.g.dart';
@@ -146,6 +147,7 @@ Widget _sheetContent(BuildContext context, Order order) {
 
 @hwidget
 Widget orderPage(BuildContext context, Order order) {
+  var ordersApi = Provider.of<IocContainer>(context).ordersApi;
   var orderState = useState(order);
   var courierLocation = useState<LatLng>(null);
   var height = MediaQuery.of(context).size.height;
@@ -174,9 +176,7 @@ Widget orderPage(BuildContext context, Order order) {
         case 'OrderDelivered':
         case 'OrderCanceled':
           {
-            IocContainer()
-                .api
-                .getOrdersApi()
+            ordersApi
                 .order(order.id)
                 .then((value) => orderState.value = value.data);
             break;

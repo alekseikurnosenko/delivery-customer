@@ -5,6 +5,7 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:openapi/model/order.dart';
 import 'package:openapi/model/pageable.dart';
+import 'package:provider/provider.dart';
 
 part 'ordersPage.g.dart';
 
@@ -28,6 +29,7 @@ Widget _orderItem(BuildContext context, Order order) {
 
 @hwidget
 Widget ordersPage(BuildContext context) {
+  var ordersApi = Provider.of<IocContainer>(context).ordersApi;
   var page = Pageable((b) => b
     ..pageSize = 10
     ..pageNumber = 0);
@@ -37,9 +39,7 @@ Widget ordersPage(BuildContext context) {
   useEffect(() {
     if (!isRefetching.value) return;
     isRefetching.value = false;
-    IocContainer()
-        .api
-        .getOrdersApi()
+    ordersApi
         .orders2(page)
         .then((value) => orders.value = value.data.content.asList());
   }, [isRefetching.value]);

@@ -3,16 +3,19 @@ import 'package:delivery_customer/main.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:openapi/api.dart';
+import 'package:openapi/api/orders_api.dart';
+import 'package:openapi/api/restaurants_api.dart';
 
 class IocContainer {
-  static final IocContainer _instance = IocContainer._internal();
-  factory IocContainer() => _instance;
+  BasketService basketService;
 
-  BasketService basketService = BasketService();
+  RestaurantsApi restaurantsApi;
 
-  Openapi api;
-  IocContainer._internal() {
-    api = Openapi(interceptors: [
+  OrdersApi ordersApi;
+
+  Openapi _api;
+  IocContainer() {
+    _api = Openapi(interceptors: [
       _HeaderInterceptor(),
       // _FirebaseTokenInterceptor(),
       LogInterceptor(
@@ -21,6 +24,11 @@ class IocContainer {
           responseBody: true,
           responseHeader: false)
     ]);
+
+    restaurantsApi = _api.getRestaurantsApi();
+    ordersApi = _api.getOrdersApi();
+
+    basketService = BasketService(basketApi: _api.getBasketApi());
   }
 }
 

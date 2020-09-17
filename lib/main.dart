@@ -1,10 +1,12 @@
 import 'package:delivery_customer/basket/basketPage.dart';
 import 'package:delivery_customer/checkout/checkoutPage.dart';
 import 'package:delivery_customer/homePage.dart';
+import 'package:delivery_customer/iocContainer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(Provider(create: (context) => IocContainer(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

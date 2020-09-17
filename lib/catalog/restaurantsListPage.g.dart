@@ -10,5 +10,5 @@ class RestaurantsListPage extends HookWidget {
   const RestaurantsListPage({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext _context) => restaurantsListPage();
+  Widget build(BuildContext _context) => restaurantsListPage(_context);
 }
