@@ -1,16 +1,17 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'restaurantItem.dart';
+part of 'restaurantListItem.dart';
 
 // **************************************************************************
 // FunctionalWidgetGenerator
 // **************************************************************************
 
-class RestaurantItem extends StatelessWidget {
-  const RestaurantItem(this.restaurant, {Key key}) : super(key: key);
+class RestaurantListItem extends StatelessWidget {
+  const RestaurantListItem(this.restaurant, {Key key}) : super(key: key);
 
   final Restaurant restaurant;
 
   @override
-  Widget build(BuildContext _context) => restaurantItem(_context, restaurant);
+  Widget build(BuildContext _context) =>
+      restaurantListItem(_context, restaurant);
 }

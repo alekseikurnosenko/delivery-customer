@@ -1,4 +1,4 @@
-import 'package:delivery_customer/restaurant/restaurantPage.dart';
+import 'package:delivery_customer/catalog/restaurant/restaurantPage.dart';
 import 'package:delivery_customer/util/appTextStyle.dart';
 import 'package:delivery_customer/homePage.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +6,10 @@ import 'package:flutter/widgets.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:openapi/model/restaurant.dart';
 
-part 'restaurantItem.g.dart';
+part 'restaurantListItem.g.dart';
 
 @swidget
-Widget restaurantItem(BuildContext context, Restaurant restaurant) {
+Widget restaurantListItem(BuildContext context, Restaurant restaurant) {
   var imageUrl =
       "https://img.cdn4dd.com/cdn-cgi/image/fit=contain,width=600,format=auto,quality=50/https://cdn.doordash.com/media/photos/ecd0a764-ee9e-46c7-a1ef-8fbfd3901085-retina-large.jpg";
 

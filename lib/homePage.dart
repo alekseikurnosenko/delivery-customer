@@ -1,8 +1,8 @@
 import 'package:delivery_customer/basket/basketButton.dart';
-import 'package:delivery_customer/food/restaurantItem.dart';
+import 'package:delivery_customer/catalog/restaurantsListPage.dart';
+import 'package:delivery_customer/iocContainer.dart';
 import 'package:delivery_customer/order/ordersPage.dart';
 import 'package:delivery_customer/util/appTextStyle.dart';
-import 'package:delivery_customer/iocContainer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -58,14 +58,8 @@ Widget customerHomePage(BuildContext context) {
   var pages = [foodPage, ordersPage];
   var currentPageIndex = useState(0);
 
-  var restaurants = useState<List<Restaurant>>([]);
   useEffect(() {
     IocContainer().basketService.fetch();
-    IocContainer()
-        .api
-        .getRestaurantsApi()
-        .restaurants()
-        .then((value) => restaurants.value = value.data);
   }, []);
 
   // Subsribe to basket
@@ -87,20 +81,7 @@ Widget customerHomePage(BuildContext context) {
             key: foodPage.key,
             onGenerateRoute: (settings) => MaterialPageRoute(
               settings: settings,
-              // TODO: Move to a separate page
-              builder: (context) => Container(
-                  child: Column(
-                children: [
-                  AddressPicker(),
-                  Expanded(
-                      child: ListView.builder(
-                          key: Key('RestaurantList'),
-                          itemCount: restaurants.value.length,
-                          itemBuilder: (context, index) {
-                            return RestaurantItem(restaurants.value[index]);
-                          }))
-                ],
-              )),
+              builder: (context) => RestaurantsListPage(),
             ),
           )),
           Navigator(
