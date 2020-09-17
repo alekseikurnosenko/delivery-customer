@@ -61,6 +61,7 @@ Widget _dishItem(BuildContext context, Dish dish, Restaurant restaurant) {
       "https://img.cdn4dd.com/cdn-cgi/image/fit=contain,width=600,format=auto,quality=50/https://cdn.doordash.com/media/photos/3fad35a0-3c37-4b26-995d-412042b7013a-retina-large.jpg";
 
   return InkWell(
+      key: Key('DishItem'),
       onTap: () {
         showModalBottomSheet(
           context: context,
@@ -158,6 +159,7 @@ Widget restaurantPage(BuildContext context, Restaurant restaurant) {
   var onBackButtonPressed = () => Navigator.of(context).pop();
 
   return Scaffold(
+    key: Key('RestaurantPage'),
     body: Container(
       color: Colors.white,
       child: Stack(children: [

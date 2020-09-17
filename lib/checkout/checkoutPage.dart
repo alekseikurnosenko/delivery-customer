@@ -124,6 +124,7 @@ Widget checkoutPage(BuildContext context) {
   };
 
   return Scaffold(
+    key: Key('CheckoutPage'),
     appBar: AppBar(
       backgroundColor: Colors.white,
       iconTheme: IconThemeData(color: Colors.black),
@@ -154,6 +155,7 @@ Widget checkoutPage(BuildContext context) {
                       Border(top: BorderSide(width: 1, color: Colors.black12))),
               padding: EdgeInsets.all(16),
               child: ActionButton(
+                key: Key('OrderButton'),
                 label: Text("Order and pay"),
                 onPressed: onOrderClicked,
               ))

@@ -87,12 +87,14 @@ Widget customerHomePage(BuildContext context) {
             key: foodPage.key,
             onGenerateRoute: (settings) => MaterialPageRoute(
               settings: settings,
+              // TODO: Move to a separate page
               builder: (context) => Container(
                   child: Column(
                 children: [
                   AddressPicker(),
                   Expanded(
                       child: ListView.builder(
+                          key: Key('RestaurantList'),
                           itemCount: restaurants.value.length,
                           itemBuilder: (context, index) {
                             return RestaurantItem(restaurants.value[index]);

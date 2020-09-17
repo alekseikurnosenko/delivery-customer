@@ -19,6 +19,7 @@ Widget restaurantItem(BuildContext context, Restaurant restaurant) {
   };
 
   return InkWell(
+      key: Key('RestaurantItem'),
       onTap: onTap,
       child: Container(
           padding: EdgeInsets.all(16),

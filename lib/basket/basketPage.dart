@@ -49,6 +49,7 @@ Widget _basketItem(
 @swidget
 Widget _continueButton(BuildContext context, Basket basket) =>
     RawMaterialButton(
+        key: Key('ContinueButton'),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20.0)),
         ),
@@ -123,6 +124,7 @@ Widget basketPage(BuildContext context) {
   list.removeLast();
 
   return Scaffold(
+      key: Key('BasketPage'),
       appBar: AppBar(
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.black),
