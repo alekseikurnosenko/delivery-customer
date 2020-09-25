@@ -6,7 +6,15 @@ import 'package:openapi/api.dart';
 import 'package:openapi/api/orders_api.dart';
 import 'package:openapi/api/restaurants_api.dart';
 
-class IocContainer {
+abstract class IocContainer {
+  BasketService basketService;
+
+  RestaurantsApi restaurantsApi;
+
+  OrdersApi ordersApi;
+}
+
+class IocContainerImpl implements IocContainer {
   BasketService basketService;
 
   RestaurantsApi restaurantsApi;
@@ -14,7 +22,7 @@ class IocContainer {
   OrdersApi ordersApi;
 
   Openapi _api;
-  IocContainer() {
+  IocContainerImpl() {
     _api = Openapi(interceptors: [
       _HeaderInterceptor(),
       // _FirebaseTokenInterceptor(),

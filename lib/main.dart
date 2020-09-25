@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(Provider(create: (context) => IocContainer(), child: MyApp()));
+  runApp(Provider(create: (context) => IocContainerImpl(), child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

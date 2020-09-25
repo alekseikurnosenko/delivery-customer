@@ -13,11 +13,15 @@ part 'restaurantsListPage.g.dart';
 Widget restaurantsListPage(BuildContext context) {
   var restaurantsApi = Provider.of<IocContainer>(context).restaurantsApi;
   var restaurants = useState<List<Restaurant>>([]);
+  var hasError = useState<bool>(false);
 
   useEffect(() {
-    restaurantsApi
-        .restaurants()
-        .then((value) => restaurants.value = value.data);
+    hasError.value = false;
+    restaurantsApi.restaurants().then((value) {
+      restaurants.value = value.data;
+    }).catchError((error) {
+      hasError.value = true;
+    });
   }, []);
 
   return Container(
@@ -25,12 +29,17 @@ Widget restaurantsListPage(BuildContext context) {
     children: [
       AddressPicker(),
       Expanded(
-          child: ListView.builder(
-              key: Key('RestaurantList'),
-              itemCount: restaurants.value.length,
-              itemBuilder: (context, index) {
-                return RestaurantListItem(restaurants.value[index]);
-              }))
+          key: Key('RestaurantList'),
+          child: hasError.value
+              ? Center(
+                  key: Key('LoadingError'),
+                  child: Text("Failed to load restaurants"),
+                )
+              : ListView.builder(
+                  itemCount: restaurants.value.length,
+                  itemBuilder: (context, index) {
+                    return RestaurantListItem(restaurants.value[index]);
+                  }))
     ],
   ));
 }

@@ -32,6 +32,7 @@ dev_dependencies:
   functional_widget: ^0.7.2
   flutter_driver:
     sdk: flutter
+  mockito: ^4.1.2
   test: any
 
 flutter:
